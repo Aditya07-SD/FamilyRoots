@@ -1,27 +1,15 @@
-# FamilyRoots
+# 🌳 FamilyRoots
 
 **Our Family, Our Story.**
 
 FamilyRoots is a full-stack family-tree application built with React/Vite, Express and MongoDB. This repository preserves the existing React Flow genealogy graph and Cloudinary photo workflow while adding a premium SaaS-style shell, dashboard, theme system, authentication hardening, email verification, collaboration invitations and server-side roles.
 
-# 🌳 FamilyRoots
 
 > Preserve your family story. Connect generations. Build your family tree.
 
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-FamilyRoots-success?style=for-the-badge)](https://familyroots-frontend.onrender.com)
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Aditya07-SD/FamilyRoots)
-
----
-
-## ✨ About
-
-FamilyRoots is a modern family-history platform designed to help families build,
-explore, and preserve their family stories.
-
-## 🚀 Live Demo
-
-👉 **[Open FamilyRoots](https://familyroots-frontend.onrender.com)**
 
 ## 🛠️ Tech Stack
 

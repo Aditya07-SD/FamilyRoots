@@ -7,6 +7,7 @@ import TreeCollaborator from "../models/TreeCollaborator.js";
 import { requireAuth } from "../middleware/auth.js";
 import { sendEmail } from "../utils/email.js";
 import { config } from "../config.js";
+import { sendSmtpEmail } from "../utils/smtpEmail.js";
 
 const router = Router();
 const requireOwner = (req,res,next) => req.treeAccess?.role === "OWNER" ? next() : res.status(403).json({success:false,message:"Owner permission required"});
@@ -43,10 +44,35 @@ router.post("/invite", requireAuth, requireOwner, async (req, res) => {
   });
   const link = `${config.clientUrl}/accept-invitation?token=${rawToken}`;
   try {
-    await sendEmail({
+    await sendSmtpEmail({
       to: email,
+      from: config.email.from,
       subject: `You're invited to join ${req.tree.name} on FamilyRoots`,
-      html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto"><h1>FamilyRoots</h1><p>${req.user.name} invited you to join <strong>${req.tree.name}</strong>.</p><p>${message || "Build and preserve your family story together."}</p><p><a href="${link}" style="display:inline-block;padding:12px 18px;background:#285b3b;color:#fff;text-decoration:none;border-radius:8px">Accept invitation</a></p><p>This invitation expires in 7 days.</p></div>`
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto">
+          <h1>FamilyRoots</h1>
+  
+          <p>
+            ${req.user.name} invited you to join
+            <strong>${req.tree.name}</strong>.
+          </p>
+  
+          <p>
+            ${message || "Build and preserve your family story together."}
+          </p>
+  
+          <p>
+            <a
+              href="${link}"
+              style="display:inline-block;padding:12px 18px;background:#285b3b;color:#fff;text-decoration:none;border-radius:8px"
+            >
+              Accept invitation
+            </a>
+          </p>
+  
+          <p>This invitation expires in 7 days.</p>
+        </div>
+      `
     });
   } catch (error) {
     await invitation.deleteOne();

@@ -75,8 +75,17 @@ router.post("/invite", requireAuth, requireOwner, async (req, res) => {
       `
     });
   } catch (error) {
+    console.error("Family invitation email failed:", error);
+
+    // The invitation cannot be delivered on the current plan.
     await invitation.deleteOne();
-    return res.status(error.status || 503).json({ success: false, message: error.message || "Invitation email could not be sent. Check your email configuration." });
+  
+    return res.status(403).json({
+      success: false,
+      code: "PREMIUM FEATURE",
+      message:
+        "This feature will be added in a future Premium plan update.."
+    });
   }
   res.status(201).json({ success: true, data: { invitation: { id: invitation._id, email, role, expiresAt: invitation.expiresAt, ...(config.nodeEnv === "development" ? { link } : {}) } } });
 });

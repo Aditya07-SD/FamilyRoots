@@ -1,0 +1,84 @@
+<svg width="900" height="900" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#78966f" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Main trunk -->
+    <path d="M450 870
+         C448 760 450 650 450 555
+         C450 475 450 390 450 315" stroke-width="18"></path>
+
+    <!-- Main left branch -->
+    <path d="M450 570
+         C400 525 340 485 255 445" stroke-width="12"></path>
+
+    <!-- Main right branch -->
+    <path d="M450 570
+         C500 525 560 485 645 445" stroke-width="12"></path>
+
+    <!-- Upper left branch -->
+    <path d="M450 430
+         C390 390 325 350 235 330" stroke-width="10"></path>
+
+    <!-- Upper right branch -->
+    <path d="M450 430
+         C510 390 575 350 665 330" stroke-width="10"></path>
+
+    <!-- Far left -->
+    <path d="M255 445
+         C215 410 170 385 115 375" stroke-width="8"></path>
+
+    <!-- Far right -->
+    <path d="M645 445
+         C685 410 730 385 785 375" stroke-width="8"></path>
+
+    <!-- Upper far left -->
+    <path d="M235 330
+         C195 295 160 270 115 255" stroke-width="7"></path>
+
+    <!-- Upper far right -->
+    <path d="M665 330
+         C705 295 740 270 785 255" stroke-width="7"></path>
+
+  </g>
+
+
+  <!-- =====================================================
+       LEAVES
+       ===================================================== -->
+
+  <g fill="#78966f">
+
+    <!-- Top -->
+    <circle cx="450" cy="180" r="55"></circle>
+    <circle cx="390" cy="210" r="48"></circle>
+    <circle cx="510" cy="210" r="48"></circle>
+
+    <!-- Upper left -->
+    <circle cx="275" cy="270" r="52"></circle>
+    <circle cx="205" cy="285" r="42"></circle>
+    <circle cx="145" cy="265" r="38"></circle>
+
+    <!-- Upper right -->
+    <circle cx="625" cy="270" r="52"></circle>
+    <circle cx="695" cy="285" r="42"></circle>
+    <circle cx="755" cy="265" r="38"></circle>
+
+    <!-- Middle left -->
+    <circle cx="205" cy="410" r="48"></circle>
+    <circle cx="135" cy="425" r="38"></circle>
+    <circle cx="275" cy="420" r="45"></circle>
+
+    <!-- Middle right -->
+    <circle cx="695" cy="410" r="48"></circle>
+    <circle cx="765" cy="425" r="38"></circle>
+    <circle cx="625" cy="420" r="45"></circle>
+
+    <!-- Lower left -->
+    <circle cx="320" cy="500" r="42"></circle>
+    <circle cx="245" cy="510" r="36"></circle>
+
+    <!-- Lower right -->
+    <circle cx="580" cy="500" r="42"></circle>
+    <circle cx="655" cy="510" r="36"></circle>
+
+  </g>
+</svg>

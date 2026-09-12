@@ -1,0 +1,3 @@
+import mongoose from "mongoose";
+const schema=new mongoose.Schema({tree:{type:mongoose.Schema.Types.ObjectId,ref:"FamilyTree",required:true,index:true},member:{type:mongoose.Schema.Types.ObjectId,ref:"FamilyMember"},title:{type:String,required:true,trim:true,maxlength:160},type:{type:String,enum:["birth","marriage","death","milestone","memory"],default:"milestone"},date:{type:Date,required:true,index:true},location:{type:String,trim:true,maxlength:200},description:{type:String,trim:true,maxlength:5000}},{timestamps:true});
+schema.index({tree:1,date:-1}); export default mongoose.model("FamilyEvent",schema);

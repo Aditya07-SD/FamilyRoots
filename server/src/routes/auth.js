@@ -7,7 +7,6 @@ import FamilyTree from "../models/FamilyTree.js";
 import { signToken, setAuthCookie } from "../utils/auth.js";
 import { requireAuth } from "../middleware/auth.js";
 import { sendEmail } from "../utils/email.js";
-import { sendSmtpEmail } from "../utils/smtpEmail.js";
 import { config } from "../config.js";
 
 const router = Router();
@@ -34,9 +33,11 @@ const generateOtp = () => crypto.randomInt(100000, 1000000).toString();
 
 async function sendVerificationOtp(user, code) {
   const expiresMinutes = config.email.verificationCodeExpiresMinutes;
-  await sendSmtpEmail({
+  // Sent via the Resend HTTPS API (utils/email.js), not SMTP.
+  // Render's free tier blocks outbound SMTP ports (25/465/587), so
+  // this must go over HTTPS instead of Gmail SMTP.
+  await sendEmail({
     to: user.email,
-    from: process.env.SMTP_USER,
     subject: "Your FamilyRoots verification code",
     html: `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:24px">

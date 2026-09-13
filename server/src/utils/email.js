@@ -1,5 +1,16 @@
 import { config } from "../config.js";
 
+// Parses "Name <email@example.com>" or a plain "email@example.com" string
+// into the { name, email } shape Brevo's API expects for sender/recipient.
+function parseAddress(value) {
+  const match = /^(.*)<(.+)>$/.exec(value || "");
+  if (match) {
+    const name = match[1].trim().replace(/^"|"$/g, "");
+    return { name: name || undefined, email: match[2].trim() };
+  }
+  return { email: (value || "").trim() };
+}
+
 export async function sendEmail({ to, subject, html }) {
   if (!config.email.apiKey) {
     if (config.nodeEnv === "development") {
@@ -20,21 +31,27 @@ export async function sendEmail({ to, subject, html }) {
   }
 
   try {
-    const response = await fetch("https://api.resend.com/emails", {
+    // Brevo's transactional email API. Works over plain HTTPS (port 443),
+    // so it isn't blocked by Render Free's outbound SMTP port restriction.
+    // Unlike Resend, Brevo lets you send to real recipients using a single
+    // *verified sender email address* (no domain ownership required) —
+    // see EMAIL_FROM in .env.example.
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${config.email.apiKey}`,
-        "Content-Type": "application/json"
+        "api-key": config.email.apiKey,
+        "Content-Type": "application/json",
+        accept: "application/json"
       },
       body: JSON.stringify({
-        from: config.email.from,
-        to: [to],
+        sender: parseAddress(config.email.from),
+        to: [{ email: to }],
         subject,
-        html
+        htmlContent: html
       })
     });
 
-    // Read Resend's actual response
+    // Read Brevo's actual response
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
@@ -44,8 +61,8 @@ export async function sendEmail({ to, subject, html }) {
 
       const providerMessage =
         data?.message ||
-        data?.error ||
-        `Resend returned HTTP ${response.status}`;
+        data?.code ||
+        `Brevo returned HTTP ${response.status}`;
 
       throw Object.assign(
         new Error(providerMessage),
@@ -57,11 +74,11 @@ export async function sendEmail({ to, subject, html }) {
       );
     }
 
-    console.log("Email sent successfully:", data?.id);
+    console.log("Email sent successfully:", data?.messageId);
 
     return {
       delivered: true,
-      id: data?.id
+      id: data?.messageId
     };
   } catch (error) {
     console.error("EMAIL SEND ERROR");

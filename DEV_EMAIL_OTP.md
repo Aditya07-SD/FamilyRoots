@@ -1,18 +1,15 @@
-# FamilyRoots email OTP
+# FamilyRoots Email OTP
 
-Current development registration sends a 6-digit OTP to the exact email address entered during registration. The user must enter the OTP before an auth cookie is created.
+## Overview
 
-Set these in `server/.env`:
+FamilyRoots sends a 6-digit verification OTP to the exact email address
+entered during registration.
 
-```env
-EMAIL_VERIFICATION_MODE=smtp
-EMAIL_VERIFICATION_CODE_EXPIRES_MINUTES=10
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_USER=your-gmail@gmail.com
-SMTP_APP_PASSWORD=your-google-app-password
-```
+The user must successfully enter the OTP before an authentication cookie
+is created.
 
-`SMTP_APP_PASSWORD` is a Google App Password, not the normal Gmail password.
+Both registration verification codes and collaborator invitation emails are
+sent through **Brevo's HTTPS API** using:
 
-The existing Resend verification code remains in `server/src/utils/email.js` and the `/auth/verify-email` route. No CSS files were changed.
+```text
+server/src/utils/email.js

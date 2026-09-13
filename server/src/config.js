@@ -14,9 +14,10 @@ export const config = {
   nodeEnv: process.env.NODE_ENV || "development",
   google: { clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, callbackUrl: process.env.GOOGLE_CALLBACK_URL || "http://localhost:5000/api/auth/google/callback" },
   email: {
-    from: process.env.EMAIL_FROM || `FamilyRoots <${process.env.SMTP_USER || "noreply@example.com"}>`,
+    // Sent via Brevo's HTTPS API (utils/email.js). EMAIL_FROM must be an
+    // address verified as a "sender" in Brevo (no domain ownership needed).
+    from: process.env.EMAIL_FROM || "FamilyRoots <noreply@example.com>",
     apiKey: process.env.EMAIL_API_KEY,
-    verificationMode: process.env.EMAIL_VERIFICATION_MODE || "smtp",
     verificationCodeExpiresMinutes: Number(process.env.EMAIL_VERIFICATION_CODE_EXPIRES_MINUTES || 10)
   },
   cloudinary: { cloud_name: process.env.CLOUDINARY_CLOUD_NAME, api_key: process.env.CLOUDINARY_API_KEY, api_secret: process.env.CLOUDINARY_API_SECRET }
